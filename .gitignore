@@ -1,0 +1,12 @@
+# Typical entries for Django
+*.pyc
+__pycache__/
+*.db
+.env
+/media/
+staticfiles/
+.DS_Store
+*.sqlite3
+.idea/
+.vscode/
+.env.*
