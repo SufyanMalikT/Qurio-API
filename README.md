@@ -49,16 +49,21 @@ cd Qurio-API
 
 ### 2️⃣ Create and Activate a Virtual Environment
 
+```bash
 python -m venv venv
 source venv/bin/activate     # (Linux/Mac)
 venv\Scripts\activate        # (Windows)
+```
 
-3️⃣ Install Dependencies
+### 3️⃣ Install Dependencies
 
+```bash
 pip install -r requirements.txt
+```
 
-4️⃣ Create a .env File
+### 4️⃣ Create a .env File
 
+```bash
 Example:
 
 MY_SECRET_KEY=your_secret_key
@@ -70,19 +75,24 @@ DB_PASSWORD=your_password
 DB_HOST=localhost
 DB_PORT=5432
 ALLOWED_HOSTS=127.0.0.1,localhost
+```
 
-5️⃣ Run Migrations
+### 5️⃣ Run Migrations
 
+```bash
 python manage.py migrate
+```
 
-6️⃣ Start the Server
+### 6️⃣ Start the Server
 
+```bash
 python manage.py runserver
+```
 
 
----
 
-🧩 API Endpoints (Examples)
+
+## 🧩 API Endpoints (Examples)
 
 Endpoint	Method	Description
 
@@ -98,9 +108,9 @@ Endpoint	Method	Description
 
 
 
----
 
-🔒 Authentication Flow
+
+## 🔒 Authentication Flow
 
 On login, JWT tokens (access_token & refresh_token) are stored in HTTP-only cookies.
 
@@ -108,9 +118,9 @@ Access tokens automatically refresh when expired using CookieTokenRefreshView.
 
 
 
----
 
-📄 Example Models
+
+## 📄 Example Models
 
 CustomUser
 
@@ -124,9 +134,9 @@ Vote
 
 
 
----
 
-💡 Future Improvements
+
+## 💡 Future Improvements
 
 ✅ Swagger / ReDoc API documentation
 
@@ -138,28 +148,23 @@ Vote
 
 
 
----
 
-👨‍💻 Author
+
+## 👨‍💻 Author
 
 Sufyan Malik
 🔗 GitHub Profile
 
 
----
 
-🪪 License
+
+## 🪪 License
 
 This project is licensed under the MIT License — feel free to use and modify it.
 
 
----
 
-🧠 Summary
+## 🧠 Summary
 
 Qurio API demonstrates a complete, scalable RESTful backend built with Django and DRF — featuring secure authentication, nested relationships, and clear modular design. Perfect for integration with a React or mobile frontend.
-
----
-
-Would you like me to include a **"Project Architecture" diagram (text-based)** section — showing how models, serializers, and views connect? It would make your README look even more professional.
 
