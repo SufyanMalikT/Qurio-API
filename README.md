@@ -44,7 +44,8 @@ Qurio API is a **Django REST Framework-based Question & Answer platform**, simil
 ### 1️⃣ Clone the Repository
 ```bash
 git clone https://github.com/SufyanMalikT/Qurio-API.git
-cd Qurio-API ```
+cd Qurio-API 
+```
 
 ### 2️⃣ Create and Activate a Virtual Environment
 
