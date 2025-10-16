@@ -46,7 +46,7 @@ Qurio API is a **Django REST Framework-based Question & Answer platform**, simil
 git clone https://github.com/SufyanMalikT/Qurio-API.git
 cd Qurio-API```
 
-2️⃣ Create and Activate a Virtual Environment
+### 2️⃣ Create and Activate a Virtual Environment
 
 python -m venv venv
 source venv/bin/activate     # (Linux/Mac)
