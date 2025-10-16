@@ -9,7 +9,8 @@ from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer, TokenRefreshSerializer
 from rest_framework import status, filters 
 from .permissions import CustomUserPermissions, QuestionPermission, AnswerPermission, TagsPermission
-from rest_framework.pagination import PageNumberPagination
+from .pagination import StandardResultPagination
+from django.conf import settings
 # Create your views here.
 
 class CookieTokenRefreshView(TokenRefreshView):
@@ -53,7 +54,7 @@ class CookieTokenObtainView(TokenObtainPairView):
         refresh_token = serializer.validated_data['refresh']
 
         response = Response({'success':'successfully logged in.'},status=status.HTTP_200_OK)
-
+        secure = not settings.DEBUG
         response.set_cookie(
             key="access_token",
             value=access_token,
@@ -67,7 +68,7 @@ class CookieTokenObtainView(TokenObtainPairView):
             key="refresh_token",
             value=refresh_token,
             httponly=True,
-            secure=False,
+            secure=secure,
             samesite="Lax",
             max_age=60*60*24*7
         )
@@ -81,10 +82,7 @@ class CustomUserViewSet(ModelViewSet):
     permission_classes = [CustomUserPermissions]
     filter_backends = [filters.SearchFilter]
     search_fields = ['username','email']
-    pagination_class = PageNumberPagination
-    pagination_class.page_size = 4
-    pagination_class.page_size_query_param = 'size'
-    pagination_class.max_page_size = 20
+    pagination_class = StandardResultPagination
 
 class QuestionsViewSet(ModelViewSet):
     # queryset = Questions.objects.all()
@@ -92,10 +90,7 @@ class QuestionsViewSet(ModelViewSet):
     permission_classes = [QuestionPermission]
     filter_backends = [filters.SearchFilter]
     search_fields = ['title','body']
-    pagination_class = PageNumberPagination
-    pagination_class.page_size = 4
-    pagination_class.page_size_query_param = 'size'
-    pagination_class.max_page_size = 20
+    pagination_class = StandardResultPagination
 
     def get_queryset(self):
         tag_id = self.kwargs.get('tags_pk')
@@ -117,10 +112,7 @@ class AnswerViewSet(ModelViewSet):
     serializer_class = AnswerSerializer
     # queryset = Answers.objects.all()
     permission_classes = [AnswerPermission]
-    pagination_class = PageNumberPagination
-    pagination_class.page_size = 4
-    pagination_class.page_size_query_param = 'size'
-    pagination_class.max_page_size = 20
+    pagination_class = StandardResultPagination
 
 
     def get_queryset(self):
@@ -144,37 +136,29 @@ class AnswerViewSet(ModelViewSet):
     def upvote(self, request,pk=None,questions_pk=None):
         # pk = self.kwargs.get('pk')
         answer = Answers.objects.get(id=pk)
-        print(answer.id)
-        data = {
-            'user':request.user.id,
-            'answer':answer.id,
-            'value':1
-        }
-
-        serializer = VoteSerializer(data=data)
-        if serializer.is_valid():
-            serializer.save()
-            print(serializer.data)
-            return Response(serializer.data,status=200)
-        return Response(serializer.errors)
+        
+        vote, created = Vote.objects.update_or_create(
+            user=request.user,
+            answer=answer,
+            dedaults={'value':1}
+        )
+        return Response({'Success':"You've Upvoted an answer"},status=200)
     
     @action(detail=True,methods=['POST'])
     def downvote(self, request,pk=None,questions_pk=None):
         # pk = self.kwargs.get('pk')
-        answer = Answers.objects.get(id=pk)
-        print(answer.id)
-        data = {
-            'user':request.user.id,
-            'answer':answer.id,
-            'value':-1
-        }
+        try:
+            answer = Answers.objects.get(id=pk)
+        except Answers.DoesNotExist:
+            return Response({'Error':'The answer does not exist'}, status=404)
 
-        serializer = VoteSerializer(data=data)
-        if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data,status=200)
-        return Response(serializer.errors)
+        vote, created = Vote.objects.update_or_create(
+            user=request.user,
+            answer=answer,
+            dedaults={'value':-1}
+        )
 
+        return Response({'Success':"You've Downvoted an answer"},status=200)
 
 
 
@@ -182,10 +166,7 @@ class TagViewSet(ModelViewSet):
     # queryset = Tags.objects.all()
     serializer_class = TagSerializer
     permission_classes = [TagsPermission]
-    pagination_class = PageNumberPagination
-    pagination_class.page_size = 4
-    pagination_class.page_size_query_param = 'size'
-    pagination_class.max_page_size = 20
+    pagination_class = StandardResultPagination
 
     def get_queryset(self):
         question_id = self.kwargs.get('questions_pk')
