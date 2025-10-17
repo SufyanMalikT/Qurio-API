@@ -94,7 +94,7 @@ python manage.py runserver
 
 ## 🧩 API Endpoints (Examples)
 
-Endpoint	Method	Description
+| Endpoint|	Method	|Description
 
 /api/token/	POST	Obtain JWT tokens (login)
 /api/token/refresh/	POST	Refresh JWT token
