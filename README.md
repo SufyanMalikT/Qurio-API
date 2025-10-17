@@ -96,15 +96,19 @@ python manage.py runserver
 
 |Endpoint|Method|Description|Auth Required|
 |--------|------|-----------|-------------|
-|/api/token/|	POST |	Obtain JWT tokens (login) | 
-|/api/token/refresh/|	POST|	Refresh JWT token|
-|/users/|	GET, POST|	List or create users|
-|/tags/|	GET, POST|	List or create tags|
-|/tags/{id}/questions/|	GET|	Get all questions under a tag|
-|/questions/|	GET, POST|	List or create questions|
-|/questions/{id}/answers/|	GET, POST|	Manage answers for a question|
-|/answers/{id}/upvote/|	POST	|Upvote an answer|
-|/answers/{id}/downvote/	|POST	|Downvote an answer|
+|/api/token/|	POST |	Obtain JWT tokens (login) | ✅|
+|/api/token/refresh/|	POST|	Refresh JWT token|✅|
+|/users/|	GET |	List users|❌|
+|/users/|	POST | Create users|✅|
+|/tags/|	GET |	List tags |❌|
+|/tags/|	POST | Create tags |✅|
+|/tags/{id}/questions/|	GET |	Get all questions under a tag |❌|
+|/questions/|	GET |	List questions|❌|
+|/questions/|	POST |	Create questions|✅|
+|/questions/{id}/answers/|	GET |	List answers for a question|❌|
+|/questions/{id}/answers/|	POST |	Create answers for a question|✅|
+|/answers/{id}/upvote/|	POST	|Upvote an answer|✅|
+|/answers/{id}/downvote/| POST	|Downvote an answer|✅|
 
 
 
