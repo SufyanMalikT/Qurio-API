@@ -156,8 +156,8 @@ Vote
 
 ## 👨‍💻 Author
 
-[Sufyan Malik](https://github.com/SufyanMalikT/)
-🔗 GitHub Profile
+Sufyan Malik
+🔗 [GitHub Profile](https://github.com/SufyanMalikT/)
 
 
 
